@@ -62,14 +62,7 @@ export default {
             });
         },
         deleteModel(model) {
-            let account;
-
-            if (this.$store.state.selectedKeplrAccount) {
-                account = this.$store.state.selectedKeplrAccount;
-            } else {
-                const wallet = this.$store.getters['common/wallet/wallet'];
-                account = wallet && wallet.accounts && wallet.accounts.length > 0 ? wallet.accounts[0] : null;
-            }
+            const account = this.$store.state.selectedKeplrAccount;
             const creatorAddress = account.address;
             let loader = this.$loading.show();
             this.$store
@@ -177,7 +170,7 @@ export default {
             <Button @click="showNewModelInfoDialog" icon="pi pi-check" v-bind:class="{ 'p-disabled': !isSignedIn }" label="New Model">New Model</Button>
         </div>
 
-        <DataTable :value="allModels" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" :auto-layout="true" :paginator="true" :rows="10" v-model:filters="filters" v-model:expandedRows="expandedRows" filterDisplay="row" showGridlines stripedRows>
+        <DataTable :value="allModels" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" :auto-layout="true" :paginator="true" :rows="10" :rowsPerPageOptions="[10, 20, 50, 100]" v-model:filters="filters" v-model:expandedRows="expandedRows" filterDisplay="row" showGridlines stripedRows>
             <template #header>
                 <div class="flex justify-content-end">
                     <IconField>
